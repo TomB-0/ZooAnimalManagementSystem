@@ -35,22 +35,29 @@ namespace ZooAnimalManagementSystem.Controllers
             }
         }
 
+        [HttpGet("enclosures/{enclosureId}")]
+        public async Task<ActionResult<Enclosure>> GetEnclosure(int id)
+        {
+            var enclosure = await _enclosureRepository.GetEnclosureAsync(id);
+            if (enclosure == null)
+            {
+                return NotFound();
+            }
+            return Ok(enclosure);
+        }
+
         [HttpGet("enclosures")]
         public async Task<ActionResult<List<Enclosure>>> GetEnclosures()
         {
-            return Ok();
-        }
-
-        [HttpGet("enclosures/{enclosureId}")]
-        public async Task<ActionResult<Enclosure>> GetEnclosure(int enclosureId)
-        {
-            return Ok();
+            var enclosures = await _enclosureRepository.GetEnclosuresAsync();
+            return Ok(enclosures);
         }
 
         [HttpDelete("enclosures/{enclosureId}")]
-        public async Task<ActionResult<Enclosure>> DeleteEnclosure(int enclosureId)
+        public async Task<ActionResult> DeleteEnclosure(int id)
         {
-            return Ok();
+            await _enclosureRepository.DeleteEnclosureAsync(id);
+            return NoContent();
         }
     }
 }
