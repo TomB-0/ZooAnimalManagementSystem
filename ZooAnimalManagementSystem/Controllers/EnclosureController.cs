@@ -24,7 +24,15 @@ namespace ZooAnimalManagementSystem.Controllers
         [HttpPut("enclosures/{enclosureId}")]
         public async Task<ActionResult<Enclosure>> UpdateEnclosure(Enclosure enclosure)
         {
-            return Ok();
+            try
+            {
+                var updatedEnclosure = await _enclosureRepository.UpdateEnclosureAsync(enclosure);
+                return Ok(updatedEnclosure);
+            }
+            catch
+            {
+                return NotFound();
+            }
         }
 
         [HttpGet("enclosures")]
