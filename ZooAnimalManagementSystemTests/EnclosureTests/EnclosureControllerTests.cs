@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using ZooAnimalManagementSystem.Controllers;
+using ZooAnimalManagementSystem.Dtos;
 using ZooAnimalManagementSystem.Entities;
 using ZooAnimalManagementSystem.Interfaces;
 using static ZooAnimalManagementSystem.Helpers.Enums;
@@ -29,11 +30,12 @@ namespace ZooAnimalManagementSystemTests.EnclosureTests
         {
             // Arrange
             var mockEnclosure = new Enclosure { Id = 1, Name = "Enclosure 1", Size = EnclosureSize.Large, Location = EnclosureLocation.Inside, Objects = new List<String> { "Wall" } };
+            var mockEnclosureDto = new EnclosureDto { Name = "Enclosure 1", Size = EnclosureSize.Large, Location = EnclosureLocation.Inside, Objects = new List<String> { "Wall" } };
             _mockEnclosureRepo.Setup(repo => repo.CreateEnclosureAsync(It.IsAny<Enclosure>()))
                            .ReturnsAsync(mockEnclosure);
 
             // Act
-            var result = await _enclosureController.CreateEnclosure(mockEnclosure);
+            var result = await _enclosureController.CreateEnclosure(mockEnclosureDto);
 
             // Assert
             var actionResult = Assert.IsType<OkObjectResult>(result.Result);
@@ -45,11 +47,13 @@ namespace ZooAnimalManagementSystemTests.EnclosureTests
         {
             // Arrange
             var mockEnclosure = new Enclosure { Id = 1, Name = "Enclosure 1", Size = EnclosureSize.Large, Location = EnclosureLocation.Inside, Objects = new List<String> { "Wall" } };
+            var mockEnclosureDto = new EnclosureDto { Name = "Enclosure 1", Size = EnclosureSize.Large, Location = EnclosureLocation.Inside, Objects = new List<String> { "Wall" } };
             _mockEnclosureRepo.Setup(repo => repo.UpdateEnclosureAsync(It.IsAny<Enclosure>()))
                            .ReturnsAsync(mockEnclosure);
-
+            _mockEnclosureRepo.Setup(repo => repo.GetEnclosureAsync(It.IsAny<int>()))
+               .ReturnsAsync(mockEnclosure);
             // Act
-            var result = await _enclosureController.UpdateEnclosure(mockEnclosure);
+            var result = await _enclosureController.UpdateEnclosure(1, mockEnclosureDto);
 
             // Assert
             var actionResult = Assert.IsType<OkObjectResult>(result.Result);

@@ -6,8 +6,8 @@ namespace ZooAnimalManagementSystem.Interfaces
     {
         Task<Enclosure> CreateEnclosureAsync(Enclosure enclosure);
         Task<Enclosure> UpdateEnclosureAsync(Enclosure enclosure);
-        Task<Enclosure> GetEnclosureAsync(int enclosureId);
+        Task<Enclosure> GetEnclosureAsync(int id);
         Task<List<Enclosure>> GetEnclosuresAsync();
-        Task DeleteEnclosureAsync(int enclosureId);
+        Task DeleteEnclosureAsync(int id);
     }
 }

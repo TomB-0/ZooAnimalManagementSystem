@@ -31,7 +31,7 @@ namespace ZooAnimalManagementSystem.Data.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Species = table.Column<string>(type: "TEXT", nullable: false),
-                    Food = table.Column<string>(type: "TEXT", nullable: false),
+                    Food = table.Column<int>(type: "INTEGER", nullable: false),
                     Amount = table.Column<int>(type: "INTEGER", nullable: false),
                     EnclosureId = table.Column<int>(type: "INTEGER", nullable: false)
                 },

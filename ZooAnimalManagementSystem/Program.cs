@@ -1,6 +1,7 @@
 using ZooAnimalManagementSystem.Data;
 using ZooAnimalManagementSystem.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<DataContext>(opt =>
 {
-    opt.UseSqlite("DefaultConnection");
+  opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
 
