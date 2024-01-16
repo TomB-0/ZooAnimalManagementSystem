@@ -12,9 +12,11 @@ namespace ZooAnimalManagementSystem.Data
             _context = context;
         }
 
-        public Task<Animal> CreateAnimalAsync(Animal animal)
+        public async Task<Animal> CreateAnimalAsync(Animal animal)
         {
-            throw new NotImplementedException();
+            _context.Animals.Add(animal);
+            await _context.SaveChangesAsync();
+            return animal;
         }
 
         public Task DeleteAnimalAsync(int animalId)
