@@ -12,9 +12,11 @@ namespace ZooAnimalManagementSystem.Data
             _context = context;
         }
 
-        public Task<Enclosure> CreateEnclosureAsync(Enclosure enclosure)
+        public async Task<Enclosure> CreateEnclosureAsync(Enclosure enclosure)
         {
-            throw new NotImplementedException();
+            _context.Enclosures.Add(enclosure);
+            await _context.SaveChangesAsync();
+            return enclosure;
         }
 
         public Task DeleteEnclosureAsync(int enclosureId)

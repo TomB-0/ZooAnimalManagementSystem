@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ZooAnimalManagementSystem.Data;
 using ZooAnimalManagementSystem.Entities;
 using ZooAnimalManagementSystem.Interfaces;
 
@@ -16,7 +17,8 @@ namespace ZooAnimalManagementSystem.Controllers
         [HttpPost("enclosures")]
         public async Task<ActionResult<Enclosure>> CreateEnclosure(Enclosure enclosure)
         {
-            return Ok();
+            var createdEnclosure = await _enclosureRepository.CreateEnclosureAsync(enclosure);
+            return Ok(createdEnclosure);
         }
 
         [HttpPut("enclosures/{enclosureId}")]
