@@ -16,7 +16,8 @@ namespace ZooAnimalManagementSystem.Controllers
         [HttpPost("animals")]
         public async Task<ActionResult<Animal>> CreateAnimal(Animal animal)
         {
-            return Ok();
+            var createdAnimal = await _animalRepository.CreateAnimalAsync(animal);
+            return Ok(createdAnimal);
         }
 
         [HttpPut("animals/{animalId}")]
