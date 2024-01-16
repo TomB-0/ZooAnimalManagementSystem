@@ -34,9 +34,11 @@ namespace ZooAnimalManagementSystem.Data
             throw new NotImplementedException();
         }
 
-        public Task<Enclosure> UpdateEnclosureAsync(Enclosure enclosure)
+        public async Task<Enclosure> UpdateEnclosureAsync(Enclosure enclosure)
         {
-            throw new NotImplementedException();
+            _context.Enclosures.Update(enclosure);
+            await _context.SaveChangesAsync();
+            return enclosure;
         }
     }
 }
