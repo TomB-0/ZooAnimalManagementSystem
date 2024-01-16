@@ -34,9 +34,11 @@ namespace ZooAnimalManagementSystem.Data
             throw new NotImplementedException();
         }
 
-        public Task<Animal> UpdateAnimalAsync(Animal animal)
+        public async Task<Animal> UpdateAnimalAsync(Animal animal)
         {
-            throw new NotImplementedException();
+            _context.Animals.Update(animal);
+            await _context.SaveChangesAsync();
+            return animal;
         }
     }
 }

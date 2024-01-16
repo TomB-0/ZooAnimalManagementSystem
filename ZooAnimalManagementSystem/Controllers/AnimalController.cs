@@ -17,13 +17,21 @@ namespace ZooAnimalManagementSystem.Controllers
         public async Task<ActionResult<Animal>> CreateAnimal(Animal animal)
         {
             var createdAnimal = await _animalRepository.CreateAnimalAsync(animal);
-            return CreatedAtAction(nameof(GetAnimal), new { id = createdAnimal.Id }, createdAnimal);
+            return Ok(createdAnimal);
         }
 
         [HttpPut("animals/{animalId}")]
         public async Task<ActionResult<Animal>> UpdateAnimal(Animal animal)
         {
-            return Ok();
+            try
+            {
+                var updatedAnimal = await _animalRepository.UpdateAnimalAsync(animal);
+                return Ok(updatedAnimal);
+            }
+            catch
+            {
+                return NotFound();
+            }
         }
 
         [HttpGet("animals/{animalId}")]
