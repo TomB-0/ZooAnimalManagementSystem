@@ -1,4 +1,5 @@
-﻿using ZooAnimalManagementSystem.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using ZooAnimalManagementSystem.Entities;
 using ZooAnimalManagementSystem.Interfaces;
 
 namespace ZooAnimalManagementSystem.Data
@@ -19,19 +20,24 @@ namespace ZooAnimalManagementSystem.Data
             return enclosure;
         }
 
-        public Task DeleteEnclosureAsync(int enclosureId)
+        public async Task DeleteEnclosureAsync(int id)
         {
-            throw new NotImplementedException();
+            var enclosure = await _context.Enclosures.FindAsync(id);
+            if (enclosure != null)
+            {
+                _context.Enclosures.Remove(enclosure);
+                await _context.SaveChangesAsync();
+            }
         }
 
-        public Task<Enclosure> GetEnclosureAsync(int enclosureId)
+        public async Task<Enclosure> GetEnclosureAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Enclosures.FindAsync(id);
         }
 
-        public Task<List<Enclosure>> GetEnclosuresAsync()
+        public async Task<List<Enclosure>> GetEnclosuresAsync()
         {
-            throw new NotImplementedException();
+            return await _context.Enclosures.ToListAsync();
         }
 
         public async Task<Enclosure> UpdateEnclosureAsync(Enclosure enclosure)
