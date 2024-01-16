@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ZooAnimalManagementSystem.Entities;
 using ZooAnimalManagementSystem.Interfaces;
+using ZooAnimalManagementSystem.Dtos;
 
 namespace ZooAnimalManagementSystem.Controllers
 {
@@ -14,18 +15,42 @@ namespace ZooAnimalManagementSystem.Controllers
         }
 
         [HttpPost("animals")]
-        public async Task<ActionResult<Animal>> CreateAnimal(Animal animal)
+        public async Task<ActionResult<Animal>> CreateAnimal(AnimalDto createAnimalDto)
         {
+            var animal = new Animal
+            {
+                Species = createAnimalDto.Species,
+                Food = createAnimalDto.Food,
+                Amount = createAnimalDto.Amount
+            };
+
             var createdAnimal = await _animalRepository.CreateAnimalAsync(animal);
             return Ok(createdAnimal);
         }
 
-        [HttpPut("animals/{animalId}")]
-        public async Task<ActionResult<Animal>> UpdateAnimal(Animal animal)
+        [HttpPut("animals/{id}")]
+        public async Task<ActionResult<Animal>> UpdateAnimal(int id, [FromBody] AnimalDto animalDto)
         {
+            var animal = await _animalRepository.GetAnimalAsync(id);
+
+            if (animal == null)
+            {
+                return NotFound();
+            }
+
+            var newAnimal = new Animal
+            {
+                Id = animal.Id,
+                Species = animalDto.Species,
+                Food = animalDto.Food,
+                Amount = animalDto.Amount,
+                EnclosureId = animal.EnclosureId,
+                Enclosure = animal.Enclosure
+            };
+
             try
             {
-                var updatedAnimal = await _animalRepository.UpdateAnimalAsync(animal);
+                var updatedAnimal = await _animalRepository.UpdateAnimalAsync(newAnimal);
                 return Ok(updatedAnimal);
             }
             catch
@@ -34,7 +59,7 @@ namespace ZooAnimalManagementSystem.Controllers
             }
         }
 
-        [HttpGet("animals/{animalId}")]
+        [HttpGet("animals/{id}")]
         public async Task<ActionResult<Animal>> GetAnimal(int id)
         {
             var animal = await _animalRepository.GetAnimalAsync(id);
@@ -52,7 +77,7 @@ namespace ZooAnimalManagementSystem.Controllers
             return Ok(animals);
         }
 
-        [HttpDelete("animals/{animalId}")]
+        [HttpDelete("animals/{id}")]
         public async Task<ActionResult> DeleteAnimal(int id)
         {
             await _animalRepository.DeleteAnimalAsync(id);

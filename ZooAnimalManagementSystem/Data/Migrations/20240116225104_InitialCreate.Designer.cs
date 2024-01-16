@@ -11,7 +11,7 @@ using ZooAnimalManagementSystem.Data;
 namespace ZooAnimalManagementSystem.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240116203628_InitialCreate")]
+    [Migration("20240116225104_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,9 +32,8 @@ namespace ZooAnimalManagementSystem.Data.Migrations
                         .IsRequired()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Food")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Food")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Species")
                         .IsRequired()

@@ -6,8 +6,8 @@ namespace ZooAnimalManagementSystem.Interfaces
     {
         Task<Animal> CreateAnimalAsync(Animal animal);
         Task<Animal> UpdateAnimalAsync(Animal animal);
-        Task<Animal> GetAnimalAsync(int animalId);
+        Task<Animal> GetAnimalAsync(int id);
         Task<List<Animal>> GetAnimalsAsync();
-        Task DeleteAnimalAsync(int animalId);
+        Task DeleteAnimalAsync(int id);
     }
 }

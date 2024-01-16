@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using ZooAnimalManagementSystem.Controllers;
+using ZooAnimalManagementSystem.Dtos;
 using ZooAnimalManagementSystem.Entities;
 using ZooAnimalManagementSystem.Interfaces;
 using static ZooAnimalManagementSystem.Helpers.Enums;
@@ -29,11 +30,12 @@ namespace ZooAnimalManagementSystemTests.AnimalTests
         {
             // Arrange
             var mockAnimal = new Animal { Id = 1, Species = "wolf", Food = AnimalFood.Carnivore, Amount = 1};
+            var mockAnimalDto = new AnimalDto { Species = "wolf", Food = AnimalFood.Carnivore, Amount = 1 };
             _mockAnimalRepo.Setup(repo => repo.CreateAnimalAsync(It.IsAny<Animal>()))
                            .ReturnsAsync(mockAnimal);
 
             // Act
-            var result = await _animalController.CreateAnimal(mockAnimal);
+            var result = await _animalController.CreateAnimal(mockAnimalDto);
 
             // Assert
             var actionResult = Assert.IsType<OkObjectResult>(result.Result);
@@ -45,11 +47,13 @@ namespace ZooAnimalManagementSystemTests.AnimalTests
         {
             // Arrange
             var mockAnimal = new Animal { Id = 1, Species = "wolf", Food = AnimalFood.Carnivore, Amount = 1};
+            var mockAnimalDto = new AnimalDto { Species = "wolf", Food = AnimalFood.Carnivore, Amount = 1 };
             _mockAnimalRepo.Setup(repo => repo.UpdateAnimalAsync(It.IsAny<Animal>()))
                            .ReturnsAsync(mockAnimal);
-
+            _mockAnimalRepo.Setup(repo => repo.GetAnimalAsync(It.IsAny<int>()))
+               .ReturnsAsync(mockAnimal);
             // Act
-            var result = await _animalController.UpdateAnimal(mockAnimal);
+            var result = await _animalController.UpdateAnimal(1, mockAnimalDto);
 
             // Assert
             var actionResult = Assert.IsType<OkObjectResult>(result.Result);
@@ -57,7 +61,7 @@ namespace ZooAnimalManagementSystemTests.AnimalTests
         }
 
         [Fact]
-        public async Task GetEnclosure_ReturnsOk_WithAnimal()
+        public async Task GetAnimal_ReturnsOk_WithAnimal()
         {
             // Arrange
             var mockAnimal = new Animal { Id = 1, Species = "wolf", Food = AnimalFood.Carnivore, Amount = 1 }; 
