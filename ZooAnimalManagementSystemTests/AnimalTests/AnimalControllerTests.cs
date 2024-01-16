@@ -57,6 +57,22 @@ namespace ZooAnimalManagementSystemTests.AnimalTests
         }
 
         [Fact]
+        public async Task GetEnclosure_ReturnsOk_WithAnimal()
+        {
+            // Arrange
+            var mockAnimal = new Animal { Id = 1, Species = "wolf", Food = AnimalFood.Carnivore, Amount = 1 }; 
+            _mockAnimalRepo.Setup(repo => repo.GetAnimalAsync(It.IsAny<int>()))
+                           .ReturnsAsync(mockAnimal);
+
+            // Act
+            var result = await _animalController.GetAnimal(1);
+
+            // Assert
+            var actionResult = Assert.IsType<OkObjectResult>(result.Result);
+            Assert.Equal(mockAnimal, actionResult.Value);
+        }
+
+        [Fact]
         public async Task GetAnimal_ReturnsNotFound_WhenAnimalDoesNotExist()
         {
             // Act

@@ -1,4 +1,5 @@
-﻿using ZooAnimalManagementSystem.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using ZooAnimalManagementSystem.Entities;
 using ZooAnimalManagementSystem.Interfaces;
 
 namespace ZooAnimalManagementSystem.Data
@@ -24,14 +25,14 @@ namespace ZooAnimalManagementSystem.Data
             throw new NotImplementedException();
         }
 
-        public Task<Animal> GetAnimalAsync(int animalId)
+        public async Task<Animal> GetAnimalAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Animals.FindAsync(id);
         }
 
-        public Task<List<Animal>> GetAnimalsAsync()
+        public async Task<List<Animal>> GetAnimalsAsync()
         {
-            throw new NotImplementedException();
+            return await _context.Animals.ToListAsync();
         }
 
         public async Task<Animal> UpdateAnimalAsync(Animal animal)
