@@ -20,9 +20,14 @@ namespace ZooAnimalManagementSystem.Data
             return animal;
         }
 
-        public Task DeleteAnimalAsync(int animalId)
+        public async Task DeleteAnimalAsync(int id)
         {
-            throw new NotImplementedException();
+            var animal = await _context.Animals.FindAsync(id);
+            if (animal != null)
+            {
+                _context.Animals.Remove(animal);
+                await _context.SaveChangesAsync();
+            }
         }
 
         public async Task<Animal> GetAnimalAsync(int id)
