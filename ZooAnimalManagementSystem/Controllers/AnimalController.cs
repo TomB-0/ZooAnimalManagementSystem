@@ -35,15 +35,21 @@ namespace ZooAnimalManagementSystem.Controllers
         }
 
         [HttpGet("animals/{animalId}")]
-        public async Task<ActionResult<Animal>> GetAnimal(int animalId)
+        public async Task<ActionResult<Animal>> GetAnimal(int id)
         {
-            return Ok();
+            var animal = await _animalRepository.GetAnimalAsync(id);
+            if (animal == null)
+            {
+                return NotFound();
+            }
+            return Ok(animal);
         }
 
         [HttpGet("animals")]
         public async Task<ActionResult<List<Animal>>> GetAnimals()
         {
-            return Ok();
+            var animals = await _animalRepository.GetAnimalsAsync();
+            return Ok(animals);
         }
 
         [HttpDelete("animals/{animalId}")]
