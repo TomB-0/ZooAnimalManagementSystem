@@ -53,9 +53,10 @@ namespace ZooAnimalManagementSystem.Controllers
         }
 
         [HttpDelete("animals/{animalId}")]
-        public async Task<ActionResult> DeleteAnimal(int animalId)
+        public async Task<ActionResult> DeleteAnimal(int id)
         {
-            return Ok();
+            await _animalRepository.DeleteAnimalAsync(id);
+            return NoContent();
         }
     }
 }
