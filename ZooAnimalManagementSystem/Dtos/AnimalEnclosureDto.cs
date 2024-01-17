@@ -1,15 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using static ZooAnimalManagementSystem.Helpers.Enums;
+﻿using static ZooAnimalManagementSystem.Helpers.Enums;
 
-namespace ZooAnimalManagementSystem.Entities
+namespace ZooAnimalManagementSystem.Dtos
 {
-    public class Animal
+    public class AnimalEnclosureDto
     {
         public int Id { get; set; }
         public string Species { get; set; }
         public AnimalFood Food { get; set; }
         public int Amount { get; set; }
         public int? EnclosureId { get; set; }
-        public Enclosure? Enclosure { get; set; }
+        public EnclosureDto? EnclosureDto{ get; set; }
     }
 }

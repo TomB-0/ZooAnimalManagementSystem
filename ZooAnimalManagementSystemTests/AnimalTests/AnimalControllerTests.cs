@@ -43,6 +43,22 @@ namespace ZooAnimalManagementSystemTests.AnimalTests
         }
 
         [Fact]
+        public async Task BulkCreateAnimal_ReturnsOk()
+        {
+            // Arrange
+            var mockAnimalList = new List<Animal> { new Animal { Id = 1, Species = "wolf", Food = AnimalFood.Carnivore, Amount = 1 } };
+            var mockAnimalDtoList = new AnimalListDto { Animals = new List<AnimalDto> { new AnimalDto { Species = "wolf", Food = AnimalFood.Carnivore, Amount = 1 } } };
+            _mockAnimalRepo.Setup(repo => repo.CreateAnimalAsync(It.IsAny<Animal>()))
+                           .ReturnsAsync(mockAnimalList[0]);
+
+            // Act
+            var result = await _animalController.BulkCreateAnimals(mockAnimalDtoList);
+
+            // Assert
+            Assert.IsType<OkObjectResult>(result);  
+        }
+
+        [Fact]
         public async Task UpdateAnimal_ReturnsOk_WithAnimal()
         {
             // Arrange

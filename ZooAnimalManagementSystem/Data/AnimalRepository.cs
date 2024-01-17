@@ -32,12 +32,16 @@ namespace ZooAnimalManagementSystem.Data
 
         public async Task<Animal> GetAnimalAsync(int id)
         {
-            return await _context.Animals.FindAsync(id);
+            return await _context.Animals
+                .Include(a => a.Enclosure)
+                .FirstOrDefaultAsync(a => a.Id == id);
         }
 
         public async Task<List<Animal>> GetAnimalsAsync()
         {
-            return await _context.Animals.ToListAsync();
+            return await _context.Animals
+                .Include(a => a.Enclosure)
+                .ToListAsync();
         }
 
         public async Task<Animal> UpdateAnimalAsync(Animal animal)

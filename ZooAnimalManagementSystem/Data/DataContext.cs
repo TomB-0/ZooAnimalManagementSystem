@@ -15,13 +15,11 @@ namespace ZooAnimalManagementSystem.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Animal>()
-            .Property(a => a.EnclosureId)
-            .IsRequired(false);
-
-            modelBuilder.Entity<Animal>()
                 .HasOne(a => a.Enclosure)
                 .WithMany(e => e.Animals)
-                .HasForeignKey(a => a.EnclosureId);
+                .HasForeignKey(a => a.EnclosureId)
+                .IsRequired(false)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Enclosure>()
                 .Property(e => e.Objects)
