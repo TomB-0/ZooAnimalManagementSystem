@@ -43,6 +43,22 @@ namespace ZooAnimalManagementSystemTests.EnclosureTests
         }
 
         [Fact]
+        public async Task BulkCreateEnclosure_ReturnsOk()
+        {
+            // Arrange
+            var mockEnclosure = new List<Enclosure> { new Enclosure { Id = 1, Name = "Enclosure 1", Size = EnclosureSize.Large, Location = EnclosureLocation.Inside, Objects = new List<String> { "Wall" } } };
+            var mockEnclosureDto = new EnclosureListDto { Enclosures = new List<EnclosureDto> { new EnclosureDto { Name = "Enclosure 1", Size = EnclosureSize.Large, Location = EnclosureLocation.Inside, Objects = new List<String> { "Wall" } } } };
+            _mockEnclosureRepo.Setup(repo => repo.CreateEnclosureAsync(It.IsAny<Enclosure>()))
+                           .ReturnsAsync(mockEnclosure[0]);
+
+            // Act
+            var result = await _enclosureController.BulkCreateEnclosures(mockEnclosureDto);
+
+            // Assert
+            Assert.IsType<OkObjectResult>(result);
+        }
+
+        [Fact]
         public async Task UpdateEnclosure_ReturnsOk_WithAnimal()
         {
             // Arrange
@@ -52,6 +68,7 @@ namespace ZooAnimalManagementSystemTests.EnclosureTests
                            .ReturnsAsync(mockEnclosure);
             _mockEnclosureRepo.Setup(repo => repo.GetEnclosureAsync(It.IsAny<int>()))
                .ReturnsAsync(mockEnclosure);
+
             // Act
             var result = await _enclosureController.UpdateEnclosure(1, mockEnclosureDto);
 
@@ -115,5 +132,7 @@ namespace ZooAnimalManagementSystemTests.EnclosureTests
             // Assert
             Assert.IsType<NoContentResult>(result);
         }
+
+
     }
 }
